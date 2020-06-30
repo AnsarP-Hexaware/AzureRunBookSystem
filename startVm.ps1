@@ -9,7 +9,7 @@ try
 {
     # Get the connection "AzureRunAsConnection "
     $servicePrincipalConnection=Get-AutomationConnection -Name $connectionName 
-   "Logging in to Azure..."
+   "Logging in to Azure...."
     Add-AzureRmAccount `
         -ServicePrincipal `
         -TenantId $servicePrincipalConnection.TenantId `
@@ -24,7 +24,7 @@ catch {
     {
         $ErrorMessage = "Connection $connectionName not found."
     } else{
-        $ErrorMessage = $_.Exception.Message
+      $ErrorMessage = $_.Exception.Message
     }
     throw $ErrorMessage
     
