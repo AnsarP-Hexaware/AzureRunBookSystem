@@ -3,7 +3,6 @@ Param(
     [string]$ResourceGroupName,
     [string]$VMName
     )
-
 $ErrorActionPreference = "Stop"
 $connectionName = "AzureRunAsConnection"
 try
@@ -28,6 +27,6 @@ catch {
         $ErrorMessage = $_.Exception.Message
     }
     throw $ErrorMessage
-    #Write-Error -Message $ErrorMessage
+    
    
 } 
