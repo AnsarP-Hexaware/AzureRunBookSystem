@@ -1,0 +1,18 @@
+﻿
+[
+{
+"Category" : "StartVM",
+
+"Script" : "TestStartVM"
+},
+{
+"Category" : "StopVM",
+
+"Script" : "TestStoptVM"
+}
+
+]
+
+
+
+
