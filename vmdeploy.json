@@ -1,0 +1,144 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+    },
+    "resources": [
+        {
+            "name": "MYvNET",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [],
+            "tags": {
+                "displayName": "MYvNET"
+            },
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('MYvNETPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('MYvNETSubnet1Name')]",
+                        "properties": {
+                            "addressPrefix": "[variables('MYvNETSubnet1Prefix')]"
+                        }
+                    },
+                    {
+                        "name": "[variables('MYvNETSubnet2Name')]",
+                        "properties": {
+                            "addressPrefix": "[variables('MYvNETSubnet2Prefix')]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('vmTestNicName')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', 'MYvNET')]"
+            ],
+            "tags": {
+                "displayName": "vmTestNic"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[variables('vmTestSubnetRef')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[parameters('vmTestName')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+                "[concat('Microsoft.Storage/storageAccounts/', variables('TestStorageName'))]",
+                "[concat('Microsoft.Network/networkInterfaces/', variables('vmTestNicName'))]"
+            ],
+            "tags": {
+                "displayName": "vmTest"
+            },
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[variables('vmTestVmSize')]"
+                },
+                "osProfile": {
+                    "computerName": "[parameters('vmTestName')]",
+                    "adminUsername": "[parameters('vmTestAdminUsername')]",
+                    "adminPassword": "[parameters('vmTestAdminPassword')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "[variables('vmTestImagePublisher')]",
+                        "offer": "[variables('vmTestImageOffer')]",
+                        "sku": "[parameters('vmTestWindowsOSVersion')]",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "vmTestOSDisk",
+                        "vhd": {
+                            "uri": "[concat('http://', variables('TestStorageName'), '.blob.core.windows.net/', variables('vmTestStorageAccountContainerName'), '/', variables('vmTestOSDiskName'), '.vhd')]"
+                        },
+                        "caching": "ReadWrite",
+                        "createOption": "FromImage"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('vmTestNicName'))]"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "[variables('TestStorageName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [],
+            "tags": {
+                "displayName": "TestStorage"
+            },
+            "properties": {
+                "accountType": "[parameters('TestStorageType')]"
+            }
+        }
+    ],
+    "variables": {
+        "MYvNETPrefix": "10.0.0.0/16",
+        "MYvNETSubnet1Name": "Subnet-1",
+        "MYvNETSubnet1Prefix": "10.0.0.0/24",
+        "MYvNETSubnet2Name": "Subnet-2",
+        "MYvNETSubnet2Prefix": "10.0.1.0/24",
+        "vmTestImagePublisher": "MicrosoftWindowsServer",
+        "vmTestImageOffer": "WindowsServer",
+        "vmTestOSDiskName": "vmTestOSDisk",
+        "vmTestVmSize": "Standard_D1",
+        "vmTestVnetID": "[resourceId('Microsoft.Network/virtualNetworks', 'MYvNET')]",
+        "vmTestSubnetRef": "[concat(variables('vmTestVnetID'), '/subnets/', variables('MYvNETSubnet1Name'))]",
+        "vmTestStorageAccountContainerName": "vhds",
+        "vmTestNicName": "[concat(parameters('vmTestName'), 'NetworkInterface')]",
+        "TestStorageName": "[concat('TestStorage', uniqueString(resourceGroup().id))]",
+		"TestStorageType": "Standard_LRS",
+		"vmTestName":"TestVM",
+		"vmTestWindowsOSVersion":"2012-R2-Datacenter",
+		"vmTestAdminUserName" : "admin1",
+		"vmTestAdminPassword" : "password123"
+    }
+}
