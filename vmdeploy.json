@@ -1,7 +1,7 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
+    "variables": {
 	    
     },
     "resources": [
@@ -78,15 +78,15 @@
                     "vmSize": "[variables('vmTestVmSize')]"
                 },
                 "osProfile": {
-                    "computerName": "[parameters('vmTestName')]",
-                    "adminUsername": "[parameters('vmTestAdminUsername')]",
-                    "adminPassword": "[parameters('vmTestAdminPassword')]"
+                    "computerName": "[variables('vmTestName')]",
+                    "adminUsername": "[variables('vmTestAdminUsername')]",
+                    "adminPassword": "[variables('vmTestAdminPassword')]"
                 },
                 "storageProfile": {
                     "imageReference": {
                         "publisher": "[variables('vmTestImagePublisher')]",
                         "offer": "[variables('vmTestImageOffer')]",
-                        "sku": "[parameters('vmTestWindowsOSVersion')]",
+                        "sku": "[variables('vmTestWindowsOSVersion')]",
                         "version": "latest"
                     },
                     "osDisk": {
@@ -117,7 +117,7 @@
                 "displayName": "TestStorage"
             },
             "properties": {
-                "accountType": "[parameters('TestStorageType')]"
+                "accountType": "[variables('TestStorageType')]"
             }
         }
     ],
@@ -134,13 +134,13 @@
         "vmTestVnetID": "[resourceId('Microsoft.Network/virtualNetworks', 'MYvNET')]",
         "vmTestSubnetRef": "[concat(variables('vmTestVnetID'), '/subnets/', variables('MYvNETSubnet1Name'))]",
         "vmTestStorageAccountContainerName": "vhds",
-        "vmTestNicName": "[concat(parameters('vmTestName'), 'NetworkInterface')]",
+        "vmTestNicName": "[concat(variables('vmTestName'), 'NetworkInterface')]",
         "TestStorageName": "[concat('TestStorage', uniqueString(resourceGroup().id))]",
 		"TestStorageType": "Standard_LRS",
 		"vmTestName":"TestVM",
 		"vmTestWindowsOSVersion":"2012-R2-Datacenter",
 		"vmTestAdminUserName" : "admin1",
 		"vmTestAdminPassword" : "password123",
-	    "vmTestName" : "TestVM2"
+	    
     }
 }
