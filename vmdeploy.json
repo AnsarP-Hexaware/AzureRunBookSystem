@@ -1,9 +1,20 @@
+
+  
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "variables": {
-	    
+   parameters": {
+    "AdminUsername": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 24
     },
+    "AdminPassword": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 24
+    }
+  },
     "resources": [
         {
             "name": "MYvNET",
@@ -79,8 +90,8 @@
                 },
                 "osProfile": {
                     "computerName": "[variables('vmTestName')]",
-                    "adminUsername": "[variables('vmTestAdminUsername')]",
-                    "adminPassword": "[variables('vmTestAdminPassword')]"
+                    "adminUsername": "[parameters('AdminUsername')]",
+                    "adminPassword": "[parameters('AdminPassword')]"
                 },
                 "storageProfile": {
                     "imageReference": {
@@ -138,9 +149,9 @@
         "TestStorageName": "[concat('TestStorage', uniqueString(resourceGroup().id))]",
 		"TestStorageType": "Standard_LRS",
 		"vmTestName":"TestVM",
-		"vmTestWindowsOSVersion":"2012-R2-Datacenter",
-		"vmTestAdminUserName" : "admin1",
-		"vmTestAdminPassword" : "password123",
+		"vmTestWindowsOSVersion":"2012-R2-Datacenter"
+	
 	    
     }
 }
+
