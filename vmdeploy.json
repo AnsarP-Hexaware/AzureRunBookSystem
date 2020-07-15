@@ -5,14 +5,17 @@
     "contentVersion": "1.0.0.0",
    "parameters": {
     "Username": {
-      "type": "string",
-      "minLength": 3,
-      "maxLength": 24
+     "type": "string",
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
     },
     "Password": {
       "type": "string",
-      "minLength": 3,
-      "maxLength": 24
+      "type": "string",
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
     }
   },
     "resources": [
