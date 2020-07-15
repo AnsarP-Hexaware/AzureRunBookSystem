@@ -1,9 +1,14 @@
-
-  
+ 
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
    "parameters": {
+      "VMName": {
+     "type": "string",
+      "metadata": {
+        "description": "ResourceGroup"
+      }
+    },
     "Username": {
      "type": "string",
       "metadata": {
@@ -11,7 +16,7 @@
       }
     },
     "Password": {
-      "type": "string",
+      
       "type": "string",
       "metadata": {
         "description": "Password for the Virtual Machine."
@@ -76,7 +81,7 @@
             }
         },
         {
-            "name": "[variables('vmTestName')]",
+            "name": "[parameters('VMName')]",
             "type": "Microsoft.Compute/virtualMachines",
             "location": "[resourceGroup().location]",
             "apiVersion": "2015-06-15",
@@ -92,7 +97,7 @@
                     "vmSize": "[variables('vmTestVmSize')]"
                 },
                 "osProfile": {
-                    "computerName": "[variables('vmTestName')]",
+                    "computerName": "[concat(parameters('VMName'), 'NetworkInterface')]",
                     "adminUsername": "[parameters('Username')]",
                     "adminPassword": "[parameters('Password')]"
                 },
@@ -141,17 +146,22 @@
         "MYvNETSubnet1Prefix": "10.0.0.0/24",
         "MYvNETSubnet2Name": "Subnet-2",
         "MYvNETSubnet2Prefix": "10.0.1.0/24",
+
+
+
         "vmTestImagePublisher": "MicrosoftWindowsServer",
         "vmTestImageOffer": "WindowsServer",
         "vmTestOSDiskName": "vmTestOSDisk",
         "vmTestVmSize": "Standard_A0",
+        
+
         "vmTestVnetID": "[resourceId('Microsoft.Network/virtualNetworks', 'MYvNET')]",
         "vmTestSubnetRef": "[concat(variables('vmTestVnetID'), '/subnets/', variables('MYvNETSubnet1Name'))]",
         "vmTestStorageAccountContainerName": "vhds",
-        "vmTestNicName": "[concat(variables('vmTestName'), 'NetworkInterface')]",
+        "vmTestNicName": "[concat(parameters('vmName'), 'NetworkInterface')]",
         "TestStorageName": "[concat('TestStorage', uniqueString(resourceGroup().id))]",
 		"TestStorageType": "Standard_LRS",
-		"vmTestName":"TestVM",
+		
 		"vmTestWindowsOSVersion":"2012-R2-Datacenter"
 	
 	    
