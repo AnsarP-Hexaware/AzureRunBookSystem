@@ -159,7 +159,7 @@
         "vmTestSubnetRef": "[concat(variables('vmTestVnetID'), '/subnets/', variables('MYvNETSubnet1Name'))]",
         "vmTestStorageAccountContainerName": "vhds",
         "vmTestNicName": "[concat(parameters('vmName'), 'NetworkInterface')]",
-        "TestStorageName": "[concat('TestStorage', uniqueString(resourceGroup().id))]",
+        "TestStorageName": "[concat(parameters('vmName'), uniqueString(resourceGroup().id))]",
 		"TestStorageType": "Standard_LRS",
 		
 		"vmTestWindowsOSVersion":"2012-R2-Datacenter"
