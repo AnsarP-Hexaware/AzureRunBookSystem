@@ -93,8 +93,8 @@
                 },
                 "osProfile": {
                     "computerName": "[variables('vmTestName')]",
-                    "username": "[parameters('Username')]",
-                    "password": "[parameters('Password')]"
+                    "adminUsername": "[parameters('Username')]",
+                    "adminPassword": "[parameters('Password')]"
                 },
                 "storageProfile": {
                     "imageReference": {
