@@ -4,12 +4,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
    parameters": {
-    "AdminUsername": {
+    "Username": {
       "type": "string",
       "minLength": 3,
       "maxLength": 24
     },
-    "AdminPassword": {
+    "Password": {
       "type": "string",
       "minLength": 3,
       "maxLength": 24
@@ -90,8 +90,8 @@
                 },
                 "osProfile": {
                     "computerName": "[variables('vmTestName')]",
-                    "adminUsername": "[parameters('AdminUsername')]",
-                    "adminPassword": "[parameters('AdminPassword')]"
+                    "username": "[parameters('Username')]",
+                    "password": "[parameters('Password')]"
                 },
                 "storageProfile": {
                     "imageReference": {
