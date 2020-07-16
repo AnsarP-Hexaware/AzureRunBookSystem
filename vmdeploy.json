@@ -6,9 +6,33 @@
       "VMName": {
      "type": "string",
       "metadata": {
-        "description": "ResourceGroup"
+        "description": "VM Name"
       }
     },
+    "VMSize": {
+        "type": "string",
+         "metadata": {
+           "description": "VM Size"
+         }
+       },
+       "PublisherName": {
+        "type": "string",
+         "metadata": {
+           "description": "VM Publisher Name"
+         }
+       },
+       "Offer": {
+        "type": "string",
+         "metadata": {
+           "description": "Offer"
+         }
+       },
+       "Skus": {
+        "type": "string",
+         "metadata": {
+           "description": "Skus"
+         }
+       },
     "Username": {
      "type": "string",
       "metadata": {
@@ -94,7 +118,7 @@
             },
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "[variables('vmTestVmSize')]"
+                    "vmSize": "[parameters('VMSize')]"
                 },
                 "osProfile": {
                     "computerName": "[parameters('VMName')]",
@@ -103,9 +127,9 @@
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "publisher": "[variables('vmTestImagePublisher')]",
-                        "offer": "[variables('vmTestImageOffer')]",
-                        "sku": "[variables('vmTestWindowsOSVersion')]",
+                        "publisher": "[parameters('PublisherName')]",
+                        "offer": "[parameters('Offer')]",
+                        "sku": "[parameters('Skus')]",
                         "version": "latest"
                     },
                     "osDisk": {
@@ -149,11 +173,11 @@
 
 
 
-        "vmTestImagePublisher": "MicrosoftWindowsServer",
-        "vmTestImageOffer": "WindowsServer",
-        "vmTestOSDiskName": "vmTestOSDisk",
-        "vmTestVmSize": "Standard_A0",
+       
+        
 
+        "vmTestOSDiskName": "vmTestOSDisk",
+        
 
         "vmTestVnetID": "[resourceId('Microsoft.Network/virtualNetworks', 'MYvNET')]",
         "vmTestSubnetRef": "[concat(variables('vmTestVnetID'), '/subnets/', variables('MYvNETSubnet1Name'))]",
@@ -162,7 +186,7 @@
         "TestStorageName": "[concat(parameters('vmName'), uniqueString(resourceGroup().id))]",
 		"TestStorageType": "Standard_LRS",
 		
-		"vmTestWindowsOSVersion":"2012-R2-Datacenter"
+		"Skus":"2012-R2-Datacenter"
 	
 	    
     }
