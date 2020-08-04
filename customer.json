@@ -1,0 +1,42 @@
+
+
+{
+    "Name" : "Micheal",
+    "Workemail" : "abc@vodafone.com",
+    "Workphone" : "34354546",
+    "OrganizationName" : "Vodafone",
+    "SupportServices" : 
+    [
+        {
+            "Service":"O365MigrateAndSupport",
+            "StartDate":"01-07-2020",
+            "ExpiryDate":"01-08-2020",
+            "LicenseType":"Trial"
+        },
+        {
+            "Service":"AzureMigrateAndSupport",
+            "StartDate":"01-07-2020",
+            "ExpiryDate":"01-08-2020",
+            "LicenseType":"Trial"
+        },
+        {
+            "Service":"AzureSupportAndManage",
+            "StartDate":"01-07-2020",
+            "ExpiryDate":"01-08-2020",
+            "LicenseType":"Trial"
+        }
+
+    ],
+    "CustomerSubscriptionList":[
+        {
+            "SubscriptionId":"ZXXXX",
+            "SubscriptionName":"Sub1"
+        },
+        {
+            "SubscriptionId":"3JJHHJH",
+            "SubscriptionName":"subs2"
+        }
+
+    ]
+
+}
